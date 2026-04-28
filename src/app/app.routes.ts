@@ -27,6 +27,12 @@ export const routes: Routes = [
         .then(m => m.ReservationsComponent),
   },
   {
+    path: 'statistics',
+    loadComponent: () =>
+      import('./features/statistics/statistics.component')
+        .then(m => m.StatisticsComponent),
+  },
+  {
     path: '**',
     redirectTo: '',
   }

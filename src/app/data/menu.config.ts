@@ -21,4 +21,9 @@ export const MENU_CONFIG: MenuItem[] = [
     label: 'Reservas',
     link: '/reservations',
   },
+  {
+    type: 'normal',
+    label: 'Estadísticas',
+    link: '/statistics',
+  },
 ];

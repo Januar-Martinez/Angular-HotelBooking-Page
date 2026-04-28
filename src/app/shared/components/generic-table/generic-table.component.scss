@@ -1,0 +1,153 @@
+$primary:    #00ADB5;
+$dark:       #222831;
+$row-alt:    #fbfbfb;
+$border:     #e0e0e0;
+
+.table-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 495px;
+}
+
+.table-scroll {
+  flex: 1;
+  overflow: auto;
+}
+
+.gt-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+
+  th, td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 8px 12px;
+    border: 1px solid $border;
+  }
+
+  thead th {
+    background-color: $dark;
+    color: #fff;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+
+    &.sortable { cursor: pointer; }
+  }
+
+  .th-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .th-filter {
+    margin-top: 6px;
+
+    input, select {
+      width: 100%;
+      padding: 3px 6px;
+      border: none;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      font-size: 0.8rem;
+
+      &::placeholder { color: rgba(255,255,255,0.7); }
+      option         { color: $dark; background: #fff; }
+      &:focus        { outline: none; }
+    }
+  }
+
+  tbody tr:nth-child(odd)  td { background-color: $row-alt; }
+  tbody tr:nth-child(even) td { background-color: #fff; }
+  tbody tr:hover           td { background-color: #e6f9fa; }
+
+  tfoot td {
+    background-color: #f0f0f0;
+    font-weight: 600;
+    color: $dark;
+  }
+
+  .empty-row { color: #999; padding: 2rem; }
+}
+
+.sigma-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.6);
+  color: #fff;
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: background 0.2s;
+
+  &:hover { background: rgba(255,255,255,0.2); }
+}
+
+.actions-cell {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.action-btn {
+  background: transparent;
+  border: 1px solid $dark;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: $dark;
+
+  &:hover {
+    background: $primary;
+    border-color: $primary;
+    color: #fff;
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 4px;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  button {
+    background: #fff;
+    border: 1px solid $border;
+    border-radius: 4px;
+    padding: 4px 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    margin: 0 2px;
+
+    &:hover:not(:disabled) {
+      background: $primary;
+      color: #fff;
+      border-color: $primary;
+    }
+
+    &:disabled { opacity: 0.4; cursor: not-allowed; }
+  }
+
+  span { font-size: 0.9rem; margin: 0 8px; }
+
+  select {
+    padding: 4px 8px;
+    border: 1px solid $border;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+
+    &:focus { outline: none; }
+  }
+}
