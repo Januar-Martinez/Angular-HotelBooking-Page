@@ -90,13 +90,13 @@ export class GuestsComponent implements OnInit {
       this.guests = data;
       this.isLoading = false;
 
-      this.cdr.detectChanges(); // 👈 🔥 ESTA LÍNEA
+      this.cdr.detectChanges();
     },
     error: (err) => {
       this.errorMsg = 'Error al cargar los huéspedes.';
       this.isLoading = false;
 
-      this.cdr.detectChanges(); // 👈 también aquí
+      this.cdr.detectChanges();
       console.error(err);
     },
   });

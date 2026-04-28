@@ -1,4 +1,3 @@
-// src/app/features/home/home.component.ts
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 

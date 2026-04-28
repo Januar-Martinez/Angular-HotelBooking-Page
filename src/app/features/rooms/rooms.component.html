@@ -1,0 +1,30 @@
+<div class="page">
+  <div class="page-header">
+    <h2>Habitaciones</h2>
+    <button class="btn-new" (click)="openCreate()">
+      <i class="fa-solid fa-plus"></i> Nueva habitación
+    </button>
+  </div>
+
+  @if (isLoading) {
+    <div class="state-msg"><i class="fa-solid fa-spinner fa-spin"></i> Cargando...</div>
+  }
+
+  @if (errorMsg) {
+    <div class="state-msg error">
+      <i class="fa-solid fa-triangle-exclamation"></i> {{ errorMsg }}
+    </div>
+  }
+
+  @if (!isLoading && !errorMsg) {
+    <app-generic-table [columns]="columns" [data]="rooms" />
+  }
+
+  <app-generic-modal
+    #modal
+    [config]="modalConfig"
+    [editData]="selectedRoom"
+    (save)="onSave($event)"
+    (close)="selectedRoom = null"
+  />
+</div>

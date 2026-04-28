@@ -19,7 +19,6 @@ export class GenericTableComponent {
 
   @Input({ required: true }) columns: TableColumn[] = [];
 
-  // 🔥 SIGNALS
   private _data = signal<any[]>([]);
   filters = signal<Record<string, string>>({});
   sortColumn = signal<string>('');
@@ -30,14 +29,12 @@ export class GenericTableComponent {
 
   readonly pageSizeOptions = [5, 10, 20];
 
-  // INPUT moderno
   @Input({ required: true })
   set data(value: any[]) {
     this._data.set(value ?? []);
     this.currentPage.set(0);
   }
 
-  // 🔥 COMPUTED
   filteredData = computed(() => {
     let result = [...this._data()];
     const filters = this.filters();
@@ -72,7 +69,6 @@ export class GenericTableComponent {
     Math.ceil(this.filteredData().length / this.pageSize())
   );
 
-  // 🎯 MÉTODOS
   onFilterChange(accessor: string, value: string) {
     this.filters.update(f => ({ ...f, [accessor]: value }));
     this.currentPage.set(0);
@@ -106,7 +102,6 @@ export class GenericTableComponent {
     }));
   }
 
-  // helpers
   asMonetary(col: TableColumn): MonetaryColumn {
     return col as MonetaryColumn;
   }
