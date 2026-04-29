@@ -22,6 +22,8 @@ export class GenericModalComponent implements OnChanges {
   @Output() save  = new EventEmitter<any>();
   @Output() close = new EventEmitter<void>();
 
+  @Input() apiError = '';
+
   isEditMode = false;
   formData: Record<string, any> = {};
   isOpen = false;

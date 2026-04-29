@@ -5,6 +5,7 @@ import { GuestService } from '../../core/services/guest.service';
 import { Guest } from '../../models/guest.model';
 import { TableColumn } from '../../shared/models/table-column.model';
 import { ModalConfig } from '../../shared/models/modal-field.model';
+import { getApiError } from '../../core/utils/api-error.util';
 
 @Component({
   selector: 'app-guests',
@@ -16,6 +17,7 @@ import { ModalConfig } from '../../shared/models/modal-field.model';
 export class GuestsComponent implements OnInit {
   private guestService = inject(GuestService);
   private cdr = inject(ChangeDetectorRef);
+  apiError = '';
 
   @ViewChild('modal') modal!: GenericModalComponent;
 
@@ -82,25 +84,25 @@ export class GuestsComponent implements OnInit {
   }
 
   loadGuests(): void {
-  this.isLoading = true;
-  this.errorMsg = '';
+    this.isLoading = true;
+    this.errorMsg = '';
 
-  this.guestService.getAll().subscribe({
-    next: (data) => {
-      this.guests = data;
-      this.isLoading = false;
+    this.guestService.getAll().subscribe({
+      next: (data) => {
+        this.guests = data;
+        this.isLoading = false;
 
-      this.cdr.detectChanges();
-    },
-    error: (err) => {
-      this.errorMsg = 'Error al cargar los huéspedes.';
-      this.isLoading = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        this.errorMsg = 'Error al cargar los huéspedes.';
+        this.isLoading = false;
 
-      this.cdr.detectChanges();
-      console.error(err);
-    },
-  });
-}
+        this.cdr.detectChanges();
+        console.error(err);
+      },
+    });
+  }
 
   openCreate(): void {
     this.selectedGuest = null;
@@ -112,6 +114,11 @@ export class GuestsComponent implements OnInit {
     this.modal.open();
   }
 
+  onModalClose(): void {
+    this.selectedGuest = null;
+    this.apiError = '';
+  }
+
   onSave(formData: any): void {
     const { _isEdit, ...dto } = formData;
 
@@ -120,7 +127,9 @@ export class GuestsComponent implements OnInit {
         this.modal.closeModal();
         this.loadGuests();
       },
-      error: (err) => console.error(err),
+      error: (err) => {
+        this.apiError = getApiError(err, 'Error al crear el huésped.');
+      },
     });
   }
 

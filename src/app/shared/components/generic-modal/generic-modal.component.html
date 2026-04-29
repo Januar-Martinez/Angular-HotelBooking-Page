@@ -1,8 +1,11 @@
 @if (isOpen) {
   <div class="modal-overlay" (click)="closeModal()"></div>
 
-  <div class="modal-container" role="dialog" [attr.aria-label]="isEditMode ? config.titleEdit : config.titleCreate">
-
+  <div
+    class="modal-container"
+    role="dialog"
+    [attr.aria-label]="isEditMode ? config.titleEdit : config.titleCreate"
+  >
     <div class="modal-header">
       <h5>{{ isEditMode ? config.titleEdit : config.titleCreate }}</h5>
       <button class="close-btn" (click)="closeModal()" aria-label="Cerrar">
@@ -14,7 +17,6 @@
       @for (field of config.fields; track field.key) {
         @if (isFieldVisible(field)) {
           <div class="field-group" [class.has-error]="errors[field.key]">
-
             <div class="input-row">
               @if (field.icon) {
                 <span class="field-icon">
@@ -41,6 +43,10 @@
                 />
               }
 
+              @if (field.type === 'date') {
+                <input type="date" [placeholder]="field.label" [(ngModel)]="formData[field.key]" />
+              }
+
               @if (field.type === 'select') {
                 <select [(ngModel)]="formData[field.key]">
                   @for (opt of asSelect(field).options; track opt.value) {
@@ -56,20 +62,20 @@
                 {{ errors[field.key] }}
               </span>
             }
-
           </div>
         }
       }
     </div>
 
+    @if (apiError) {
+      <div class="api-error"><i class="fa-solid fa-triangle-exclamation"></i> {{ apiError }}</div>
+    }
+
     <div class="modal-footer">
       <button class="btn-save" (click)="onSave()">
         <i class="fa-solid fa-floppy-disk"></i> Guardar
       </button>
-      <button class="btn-cancel" (click)="closeModal()">
-        Cancelar
-      </button>
+      <button class="btn-cancel" (click)="closeModal()">Cancelar</button>
     </div>
-
   </div>
 }

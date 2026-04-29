@@ -24,7 +24,8 @@
     #modal
     [config]="modalConfig"
     [editData]="selectedRoom"
+    [apiError]="apiError"
     (save)="onSave($event)"
-    (close)="selectedRoom = null"
+    (close)="onModalClose()"
   />
 </div>

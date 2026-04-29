@@ -1,8 +1,8 @@
 <div class="page">
   <div class="page-header">
-    <h2>Huéspedes</h2>
+    <h2>Reservaciones</h2>
     <button class="btn-new" (click)="openCreate()">
-      <i class="fa-solid fa-plus"></i> Nuevo huésped
+      <i class="fa-solid fa-plus"></i> Nueva reservación
     </button>
   </div>
 
@@ -17,13 +17,13 @@
   }
 
   @if (!isLoading && !errorMsg) {
-    <app-generic-table [columns]="columns" [data]="guests" />
+    <app-generic-table [columns]="columns" [data]="reservations" />
   }
 
   <app-generic-modal
     #modal
     [config]="modalConfig"
-    [editData]="selectedGuest"
+    [editData]="selectedReservation"
     [apiError]="apiError"
     (save)="onSave($event)"
     (close)="onModalClose()"

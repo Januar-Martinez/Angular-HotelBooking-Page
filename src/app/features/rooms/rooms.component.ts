@@ -5,6 +5,7 @@ import { RoomService } from '../../core/services/room.service';
 import { Room } from '../../models/rooms.models';
 import { TableColumn } from '../../shared/models/table-column.model';
 import { ModalConfig } from '../../shared/models/modal-field.model';
+import { getApiError } from '../../core/utils/api-error.util';
 
 @Component({
   selector: 'app-rooms',
@@ -16,6 +17,7 @@ import { ModalConfig } from '../../shared/models/modal-field.model';
 export class RoomsComponent implements OnInit {
   private roomService = inject(RoomService);
   private cdr = inject(ChangeDetectorRef);
+  apiError = '';
 
   @ViewChild('modal') modal!: GenericModalComponent;
 
@@ -93,59 +95,66 @@ export class RoomsComponent implements OnInit {
   };
 
   ngOnInit(): void {
-      this.loadGuests();
-    }
-  
-    loadGuests(): void {
+    this.loadGuests();
+  }
+
+  loadGuests(): void {
     this.isLoading = true;
     this.errorMsg = '';
-  
+
     this.roomService.getAll().subscribe({
       next: (data) => {
         this.rooms = data;
         this.isLoading = false;
-  
+
         this.cdr.detectChanges();
       },
       error: (err) => {
         this.errorMsg = 'Error al cargar las habitaciones.';
         this.isLoading = false;
-  
+
         this.cdr.detectChanges();
         console.error(err);
       },
     });
   }
-  
-    openCreate(): void {
-      this.selectedRoom = null;
-      this.modal.open();
-    }
-  
-    openEdit(room: Room): void {
-      this.selectedRoom = room;
-      this.modal.open();
-    }
-  
-    onSave(formData: any): void {
-      const { _isEdit, ...dto } = formData;
-  
-      this.roomService.create(dto).subscribe({
-        next: () => {
-          this.modal.closeModal();
-          this.loadGuests();
-        },
-        error: (err) => console.error(err),
-      });
-    }
-  
-    confirmDelete(room: Room): void {
-      const confirmed = confirm(`¿Eliminar la habitación ${room.number}?`);
-      if (!confirmed) return;
-  
-      this.roomService.delete(room.id).subscribe({
-        next: () => this.loadGuests(),
-        error: (err) => console.error(err),
-      });
-    }
+
+  openCreate(): void {
+    this.selectedRoom = null;
+    this.modal.open();
+  }
+
+  openEdit(room: Room): void {
+    this.selectedRoom = room;
+    this.modal.open();
+  }
+
+  onModalClose(): void {
+  this.selectedRoom = null;
+  this.apiError = '';
+}
+
+  onSave(formData: any): void {
+    const { _isEdit, ...dto } = formData;
+
+    this.roomService.create(dto).subscribe({
+      next: () => {
+        this.modal.closeModal();
+        this.loadGuests();
+      },
+      error: (err) => {
+        this.apiError = getApiError(err, 'Error al crear el huésped.');
+      },
+    });
+  }
+
+  confirmDelete(room: Room): void {
+    const confirmed = confirm(`¿Eliminar la habitación ${room.number}?`);
+    if (!confirmed) return;
+
+    this.roomService.delete(room.id).subscribe({
+      next: () => this.loadGuests(),
+      error: (err) => console.error(err),
+    });
+  }
 }

@@ -1,4 +1,25 @@
-# AngularHotelBookingPage
+# 🏨 Hotel Management System
+
+Sistema de gestión hotelera desarrollado con **Angular 17+** (frontend) y **FastAPI** (backend).
+
+---
+
+## 🚀 Tecnologías
+
+| Capa       | Tecnología          |
+|------------|---------------------|
+| Frontend   | Angular 17+, SCSS   |
+| Backend    | FastAPI, SQLAlchemy |
+| Base datos | SQLite              |
+
+---
+
+## 📸 Algunas Capturas
+![Inicio](./src/assets/inicio.png)
+![Huespedes](./src/assets/huespedes.png)
+![Habitaciones](./src/assets/habitaciones.png)
+![Reservas](./src/assets/reservas.png)
+![Estadisticas](./src/assets/estadisticas.png)
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.8.
 

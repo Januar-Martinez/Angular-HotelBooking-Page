@@ -1,4 +1,4 @@
-export type FieldType = 'text' | 'number' | 'select' | 'hidden';
+export type FieldType = 'text' | 'number' | 'select' | 'hidden' | 'date';
 
 export interface SelectOption {
   label: string;
@@ -35,11 +35,18 @@ export interface HiddenField extends BaseField {
   type: 'hidden';
 }
 
+export interface DateField extends BaseField {
+  type: 'date';
+  min?: string;
+  max?: string;
+}
+
 export type ModalField =
   | TextField
   | NumberField
   | SelectField
-  | HiddenField;
+  | HiddenField
+  | DateField;
 
 export interface ModalConfig {
   modalId:    string;
